@@ -2,7 +2,6 @@
     var Mavigator = function (selector, options) {
         this.elementSet = Mavigator.getElementSet(selector);
         this.options = Mavigator.mergeOptions(Mavigator.DEFAULTS, options);
-        this.uri = window.location.pathname;
 
         this.init();
     };
@@ -10,6 +9,7 @@
     Mavigator.DEFAULTS = {
         className: 'active',
         classToParent: false,
+        uri: window.location.pathname,
         warnIfLinkWasntFound: false
     };
 
@@ -92,7 +92,7 @@
         links = Mavigator.NodeListToArray(links);
 
         links = links.filter(function(link) {
-            return link.pathname === this.uri;
+            return link.pathname === this.options.uri;
         }.bind(this));
 
         return links;

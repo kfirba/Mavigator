@@ -40,6 +40,7 @@ There are few options which we can pass to the constructor as the second argumen
 |       property       | default value |                          description                         |
 |:--------------------:|:-------------:|:------------------------------------------------------------:|
 | className            |    "active"   | the class which will be added to the element once found.     |
+| uri        |     window.location.pathname     | The uri the script will try to find in the navigator. Default value is okay in most cases. When you want to mark a link that its uri is ***'/discuss'*** and the uri of the page is something like ***'/discuss/general/how-we-do-x'*** we can manually tell the script to look for the ***'/discuss'*** uri.  |
 | classToParent        |     false     | Whether to add the className to the anchor tag or its parent.   |
 | warnIfLinkWasntFound |     false     | Whether to warn in the console if no link to mark was found. |
 
