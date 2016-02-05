@@ -1,11 +1,11 @@
 Mavigator
 =============
 
-A short and simply script to mark your navigators.
+A short and simple script to mark your navigators.
 
 Straight to the point
 --------
-First ,we will need to structure our navigators, there are absolutely no restrictions to this. Just make your navigator however suits your needs.
+First, we will need to structure our navigators, there are absolutely no restrictions to this. Just make your navigator however suits your needs.
 ```html
 <!--
     Feel free to structure it however you want...
@@ -19,7 +19,7 @@ First ,we will need to structure our navigators, there are absolutely no restric
 </nav>
 ```
 
-Second, let's pull the script in:
+Second, let's pull the script:
 ```javascript
 <script src="js/mavigator.min.js"></script>
 ```

@@ -1,7 +1,9 @@
 +function (window, undefined) {
     var Mavigator = function (selector, options) {
-        this.elementSet = Mavigator.getElementSet(selector);
         this.options = Mavigator.mergeOptions(Mavigator.DEFAULTS, options);
+        this.elementSet = Mavigator.getElementSet.call(this, selector);
+
+        if ( ! this.elementSet) return;
 
         this.init();
     };
@@ -15,20 +17,20 @@
 
     Mavigator.getElementSet = function (selector) {
         if (selector === undefined) {
-            console.error("Please specify a selector.");
-            throw "Error";
+            throw "Error: Please specify a selector.";
         }
 
         if (typeof selector === 'object') {
-            console.error("Please specify a selector.");
-            throw "Error";
+            throw "Error: Please specify a string selector and not an object.";
         }
 
         var elementSet = document.querySelectorAll(selector);
 
         if (elementSet.length === 0) {
-            console.error("Couldn't find the requested element.");
-            throw "Error";
+            if (this.options.warnIfLinkWasntFound) {
+                throw "Error: Couldn't find the requested element.";
+            }
+            return;
         }
 
         return Mavigator.NodeListToArray(elementSet)
