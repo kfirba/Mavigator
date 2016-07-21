@@ -1,42 +1,23 @@
-+function (window, undefined) {
-    var Mavigator = function (selector, options) {
-        this.options = Mavigator.mergeOptions(Mavigator.DEFAULTS, options);
-        this.elementSet = Mavigator.getElementSet.call(this, selector);
+class Mavigator {
+    constructor(selector = 'html', options) {
+        this.selector = selector;
+        this.options = this.mergeOptions(Mavigator.defaults(), options);
+    }
 
-        if ( ! this.elementSet) return;
+    static mark(selector, options) {
+        (new Mavigator(selector, options)).init();
+    }
 
-        this.init();
-    };
+    static defaults() {
+        return {
+            className: 'active',
+            classToParent: false,
+            uri: window.location.pathname,
+            warn: false
+        };
+    }
 
-    Mavigator.DEFAULTS = {
-        className: 'active',
-        classToParent: false,
-        uri: window.location.pathname,
-        warnIfLinkWasntFound: false
-    };
-
-    Mavigator.getElementSet = function (selector) {
-        if (selector === undefined) {
-            throw "Error: Please specify a selector.";
-        }
-
-        if (typeof selector === 'object') {
-            throw "Error: Please specify a string selector and not an object.";
-        }
-
-        var elementSet = document.querySelectorAll(selector);
-
-        if (elementSet.length === 0) {
-            if (this.options.warnIfLinkWasntFound) {
-                throw "Error: Couldn't find the requested element.";
-            }
-            return;
-        }
-
-        return Mavigator.NodeListToArray(elementSet)
-    };
-
-    Mavigator.mergeOptions = function (source, override) {
+    mergeOptions(source, override) {
         for (var key in override) {
             if (source.hasOwnProperty(key)) {
                 source[key] = override[key];
@@ -44,69 +25,69 @@
         }
 
         return source;
-    };
-
-    Mavigator.isDOMNode = function (nodes) {
-        var stringRepr = Object.prototype.toString.call(nodes);
-
-        return typeof nodes === 'object' &&
-            /^\[object (HTMLCollection|NodeList|Object)\]$/.test(stringRepr) &&
-            nodes.hasOwnProperty('length') &&
-            (nodes.length === 0 || (typeof nodes[0] === "object" && nodes[0].nodeType > 0));
     }
 
-    Mavigator.NodeListToArray = function (list) {
-        return [].slice.call(list);
-    }
+    init() {
+        let nodes = this.getNodesToMark();
 
-    Mavigator.prototype.init = function () {
-        var nodes = this.getNodesToAlter();
-
-        if (nodes.length === 0) {
-            if(this.options.warnIfLinkWasntFound) {
-                console.warn("No link to mark was found.");
+        if ( ! nodes || ! nodes.length) {
+            if (this.options.warn) {
+                console.warn(`No link to mark was found for the given URI [${this.options.uri}]`);
             }
             return;
         }
 
-        nodes.forEach(this.markNode.bind(this));
-    };
+        nodes.forEach(node => {
+            let realNode = this.options.classToParent ? node.parentNode : node;
 
-    Mavigator.prototype.getNodesToAlter = function () {
-        var nodes = [];
-
-        for (var i = 0; set = this.elementSet[i]; i++) {
-            nodes = nodes.concat(this.scanForNodes(set));
-        }
-
-        return nodes;
-    };
-
-    Mavigator.prototype.markNode = function (node) {
-        var node = this.options.classToParent ? node.parentNode : node;
-
-       this.addClassTo(node);
-    };
-
-    Mavigator.prototype.scanForNodes = function(set) {
-        var selector = 'a';
-        var links = set.querySelectorAll(selector);
-        links = Mavigator.NodeListToArray(links);
-
-        links = links.filter(function(link) {
-            return link.pathname === this.options.uri;
-        }.bind(this));
-
-        return links;
+            this.addClassTo(realNode);
+        });
     }
 
-    Mavigator.prototype.addClassTo = function (node) {
+    getNodesToMark() {
+        let nodes = [];
+        let sets = this.sets();
+
+        if ( ! sets.length) return;
+
+        sets.forEach(set =>
+            nodes = nodes.concat(this.getMarkableNodesFrom(set))
+        );
+
+        return nodes;
+    }
+
+    sets() {
+        this.validateSelector();
+
+        return document.querySelectorAll(this.selector);
+    }
+
+    validateSelector() {
+        if ( ! this.selector.length) {
+            throw new TypeError('The provided selector is empty.');
+        }
+
+        if (typeof this.selector === 'object') {
+            throw new TypeError('A selector must be a string.');
+        }
+    }
+
+    getMarkableNodesFrom(set) {
+        let selector = 'a';
+        let links = set.querySelectorAll(selector);
+        links = [].slice.call(links);
+
+        return links.filter(link => link.pathname === this.options.uri);
+    }
+
+    addClassTo(node) {
         if (node.classList) {
             node.classList.add(this.options.className);
         } else {
             node.className += ' ' + className;
         }
-    };
+    }
+}
 
-    window.Mavigator = Mavigator;
-}(window, undefined);
+export default Mavigator;

@@ -1,0 +1,24 @@
+{
+  "name": "Mavigator",
+  "version": "1.0.0",
+  "description": "A dead simple script to mark your navigators.",
+  "main": "dist/Mavigator.js",
+  "scripts": {
+    "compile": "babel --presets=es2015 -d dist src",
+    "prepublish": "npm run compile"
+  },
+  "keywords": [
+    "mark",
+    "navigator",
+    "active link",
+    "active class",
+    "mark navigators"
+  ],
+  "author":"Kfir Ben-Ami <kfirba2@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.10.1",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.11.1"
+  }
+}

@@ -1,77 +1,54 @@
 Mavigator
 =============
 
-A short and simple script to mark your navigators.
+A lightweight dead simple script to mark your navigators.
 
-Straight to the point
+Install
 --------
-First, we will need to structure our navigators, there are absolutely no restrictions to this. Just make your navigator however suits your needs.
-```html
-<!--
-    Feel free to structure it however you want...
--->
-<nav class="aNav">
-    <ul>
-        <li><a href="Home.php">Home</a></li>
-        <li><a href="Protfolio.php">Protfolio</a></li>
-        <li><a href="Contact.php">Contact</a></li>
-    </ul>
-</nav>
+```bash
+$ npm install mavigator
 ```
 
-Second, let's pull the script:
+Usage
+--------
 ```javascript
-<script src="js/mavigator.min.js"></script>
+import Mavigator from 'mavigator';
+
+Mavigator.mark();
 ```
 
-And finally:
+Yup, for most cases it's that simple.
+
+How does it work?
+--------
+Mavigator will look for any [anchor tag (`<a>`)](https://developer.mozilla.org/en/docs/Web/HTML/Element/a) inside the specified selector. The default behavior is to look for any `<a>` inside the `html` element. Once it gathers all of the link nodes, it will scan each node and figure out whether it needs to be marked or not.
+
+If needed, you can scope the `<a>` tag scanning to a specific element type such as `<nav>` or to a particular class name. Take a look at the section below and learn what type of selectors you can use.
+
+Taking it seriously
+--------
+The `Mavigator.mark()` method blueprint is:
+
 ```javascript
-new Mavigator('.aNav', {warnIfLinkWasntFound: true});
+Mavigator.mark(selector, options);
 ```
-As default behavior, the code will add the class `active` to the correct `<a>` element inside the navigators.
 
-**note:** the first argument should be a selector only.
+Where `selector` is a string compatible with [`document.querySelectorAll()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll), which means it's really flexible. The default value for this is `html`.
 
-Options
---------
+The `options` are as follow:
 
-There are few options which we can pass to the constructor as the second argument:
-
-|       property       | default value |                          description                         |
-|:--------------------:|:-------------:|:------------------------------------------------------------:|
-| className            |    "active"   | the class which will be added to the element once found.     |
-| uri        |     window.location.pathname     | The uri the script will try to find in the navigator. Default value is okay in most cases. When you want to mark a link that its uri is ***'/discuss'*** and the uri of the page is something like ***'/discuss/general/how-we-do-x'*** we can manually tell the script to look for the ***'/discuss'*** uri.  |
-| classToParent        |     false     | Whether to add the className to the anchor tag or its parent.   |
-| warnIfLinkWasntFound |     false     | Whether to warn in the console if no link to mark was found. |
-
-
-Bugs
---------
-If you encounter any kind of bug, please let me know and I will do my best in order to fix it as soon as possible.
+|    Property   |       Default value      |                                                                                                                                                       Description                                                                                                                                                       |
+|:-------------:|:------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+|   className   |         "active"         |                                                                                                                                 the class which will be added to the element once found.                                                                                                                                |
+|      uri      | window.location.pathname | The uri Mavigator will try to find on anchor tags. The default value is okay in most cases. When you want to mark a link that its uri is ***'/discuss'*** and the uri of the page is something like ***'/discuss/general/how-we-do-x'*** we can use this option to tell Mavigator to look for the ***'/discuss'*** uri. |
+| classToParent |           false          |                                                                                                                              Whether to add the className to the anchor tag or its parent.                                                                                                                              |
+|      warn     |           false          |                                                                                                                               Whether to warn in the console if no link to mark was found.                                                                                                                              |
 
 Wider support
 --------
-If you feel that the script lack some feature, please let me know.
+If you feel that the script lacks some feature, let me know.
 
 
 License
 --------
-Copyright (c) 2015 Kfir Ben-Ami (http://domanage.co.il/)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+Mavigator is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
