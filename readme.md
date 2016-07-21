@@ -1,7 +1,7 @@
 Mavigator
 =============
 
-A lightweight dead simple script to mark your navigators.
+A dead simple script to mark your navigators.
 
 Install
 --------
