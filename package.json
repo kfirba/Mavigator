@@ -1,5 +1,5 @@
 {
-  "name": "Mavigator",
+  "name": "mavigator",
   "version": "1.0.0",
   "description": "A dead simple script to mark your navigators.",
   "main": "dist/Mavigator.js",
