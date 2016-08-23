@@ -1,6 +1,6 @@
 {
   "name": "mavigator",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "author":"Kfir Ben-Ami <kfirba2@gmail.com>",
   "description": "A dead simple script to mark your navigators.",
   "keywords": [

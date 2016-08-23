@@ -37,11 +37,11 @@ class Mavigator {
             return;
         }
 
-        nodes.forEach(node => {
-            let realNode = this.options.classToParent ? node.parentNode : node;
+        for (let i = 0; i < nodes.length; i++) {
+            let realNode = this.options.classToParent ? nodes[i].parentNode : nodes[i];
 
             this.addClassTo(realNode);
-        });
+        }
     }
 
     getNodesToMark() {
@@ -50,9 +50,9 @@ class Mavigator {
 
         if ( ! sets.length) return;
 
-        sets.forEach(set =>
-            nodes = nodes.concat(this.getMarkableNodesFrom(set))
-        );
+        for (let i = 0; i < sets.length; i++) {
+            nodes = nodes.concat(this.getMarkableNodesFrom(sets[i]));
+        }
 
         return nodes;
     }
