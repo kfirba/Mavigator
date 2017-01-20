@@ -1,7 +1,7 @@
 Mavigator
 =============
 
-A dead simple script to mark your navigators.
+The easiest way to mark your navigators.
 
 Install
 --------
@@ -27,7 +27,7 @@ If needed, you can scope the `<a>` tag scanning to a specific element type such 
 
 Taking it seriously
 --------
-The `Mavigator.mark()` method blueprint is:
+The `Mavigator.mark()` method's blueprint is:
 
 ```javascript
 Mavigator.mark(selector, options);
