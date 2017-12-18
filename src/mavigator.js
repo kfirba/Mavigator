@@ -85,7 +85,7 @@ class Mavigator {
         if (node.classList) {
             node.classList.add(this.options.className);
         } else {
-            node.className += ' ' + className;
+            node.className += ' ' + this.options.className;
         }
     }
 }
