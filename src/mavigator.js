@@ -13,6 +13,7 @@ class Mavigator {
             className: 'active',
             classToParent: false,
             uri: window.location.pathname,
+            depth: false,
             warn: false
         };
     }
@@ -78,7 +79,16 @@ class Mavigator {
         let links = set.querySelectorAll(selector);
         links = [].slice.call(links);
 
-        return links.filter(link => link.pathname === this.options.uri);
+        return links.filter(function (link) {
+            if(_this.options.depth) {
+                var uri = _this.options.uri.slice(1).split('/');
+                uri.splice(_this.options.depth);
+
+                return link.pathname === '/' + uri.join('/');
+            }
+
+            return link.pathname === _this.options.uri;
+        });
     }
 
     addClassTo(node) {
