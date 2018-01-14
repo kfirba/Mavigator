@@ -13,6 +13,7 @@ class Mavigator {
             className: 'active',
             classToParent: false,
             uri: window.location.pathname,
+            depth: false,
             warn: false
         };
     }
@@ -74,11 +75,18 @@ class Mavigator {
     }
 
     getMarkableNodesFrom(set) {
+        let match = this.options.uri;
         let selector = 'a';
         let links = set.querySelectorAll(selector);
         links = [].slice.call(links);
+        
+        if(this.options.depth) {
+            let parse = match.slice(1).split('/');
+            parse.splice(this.options.depth);
+            match = '/' + parse.join('/');
+        }
 
-        return links.filter(link => link.pathname === this.options.uri);
+        return links.filter(link => link.pathname === match);
     }
 
     addClassTo(node) {
