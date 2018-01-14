@@ -75,20 +75,18 @@ class Mavigator {
     }
 
     getMarkableNodesFrom(set) {
+        let match = this.options.uri;
         let selector = 'a';
         let links = set.querySelectorAll(selector);
         links = [].slice.call(links);
+        
+        if(this.options.depth) {
+            let parse = match.slice(1).split('/');
+            parse.splice(this.options.depth);
+            match = '/' + parse.join('/');
+        }
 
-        return links.filter(function (link) {
-            if(_this.options.depth) {
-                var uri = _this.options.uri.slice(1).split('/');
-                uri.splice(_this.options.depth);
-
-                return link.pathname === '/' + uri.join('/');
-            }
-
-            return link.pathname === _this.options.uri;
-        });
+        return links.filter(link => link.pathname === match);
     }
 
     addClassTo(node) {
