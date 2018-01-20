@@ -35,14 +35,23 @@ Mavigator.mark(selector, options);
 
 Where `selector` is a string compatible with [`document.querySelectorAll()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll), which means it's really flexible. The default value for this is `html`.
 
+
+If you don't wish to override the selector but supply the options object, you can also pass the options as the first argument and the selector will default to `html`:
+
+```javascript
+// This will set the `selector` to "html" and use the given options.
+Mavigator.mark(options);
+```
+
 The `options` are as follow:
 
-|    Property   |       Default value      |                                                                                                                                                       Description                                                                                                                                                       |
-|:-------------:|:------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
-|   className   |         "active"         |                                                                                                                                 the class which will be added to the element once found.                                                                                                                                |
-|      uri      | window.location.pathname | The uri Mavigator will try to find on anchor tags. The default value is okay in most cases. When you want to mark a link that its uri is ***'/discuss'*** and the uri of the page is something like ***'/discuss/general/how-we-do-x'*** we can use this option to tell Mavigator to look for the ***'/discuss'*** uri. |
-| classToParent |           false          |                                                                                                                              Whether to add the className to the anchor tag or its parent.                                                                                                                              |
-|      warn     |           false          |                                                                                                                               Whether to warn in the console if no link to mark was found.                                                                                                                              |
+| Property | Default value | Description |
+|:-------------:|:------------------------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| className | "active" | The class which will be added to the element once found. |
+| uri | window.location.pathname | The uri Mavigator will try to find on anchor tags. The default value is okay in most cases. When you want to mark a link that its uri is ***'/discuss'*** and the uri of the page is something like ***'/discuss/general/how-we-do-x'*** we can use this option to tell Mavigator to look for the ***'/discuss'*** uri. |
+| classToParent | false | Whether to add the className to the anchor tag or its parent. |
+| markTreeDepth | 0 | Tells Mavigator whether it should "expand" the URI to match. The possible values are: <ol> <li>**0** (*default*) - Mark the given URI only.</li> <li> **-1** - Mark every URI segment. For example, given a URI like **/settings/access/auth**, Mavigator will mark the following URIs:     <ol>         <li>/settings/access/auth</li>         <li>/settings/access</li>         <li>/settings</li>     </ol>  </li> <li> **1,2,3,...,n** - Mark every URI segment up to the given value (starting from the "bottom of the tree"). For example, given a URI like **/settings/access/auth** and the value **1**, Mavigator will mark the following URIs:     <ol>         <li>/settings/access/auth</li>         <li>/settings/access - *This URI is **1** level "above" the given URI*</li>     </ol> </li> </ol> |
+| warn | false | Whether to warn in the console if no link to mark was found. |
 
 Wider support
 --------
