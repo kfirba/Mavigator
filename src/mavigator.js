@@ -1,6 +1,10 @@
 class Mavigator {
     constructor(selector = 'html', options) {
-        // TODO: If the given selector is an object, we assume the user simply passed the options instead of throwing an error.
+        if (typeof(selector) === 'object' && ! options) {
+            options = selector;
+            selector = 'html';
+        }
+
         this.selector = selector;
         this.options = this.mergeOptions(Mavigator.defaults(), options);
     }
